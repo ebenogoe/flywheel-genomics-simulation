@@ -1,59 +1,38 @@
-# Flywheel Genomics — Breeding Scheme Simulation
+# Flywheel Genomics Simulation
 
-Forward-time breeding simulation pipeline comparing Genetic Male Sterility (GMS),
-Chemical Sterilization (CS), and Conventional Inbred Development in a recurrent
-selection programme. Built with [AlphaSimR](https://cran.r-project.org/package=AlphaSimR).
+Simulation scripts for two related studies. Set your working directory to the
+relevant subfolder before running any scripts.
 
-## Requirements
+## breeding_simulation
 
-R packages: `AlphaSimR`, `ggplot2`, `statgenGWAS`, `future`, `future.apply`,
-`progressr`, `patchwork`, `dplyr`
-
-## File overview
+Forward-time breeding simulation comparing three recurrent selection schemes
+(Genetic Male Sterility, Chemical Sterilization, and Conventional Inbred Development)
+using [AlphaSimR](https://cran.r-project.org/package=AlphaSimR).
 
 | File | Purpose |
 |------|---------|
-| `new_main_run_all_scenarios_unique.R` | Main orchestration script (30 replicates, all schemes) |
-| `functions_utils.R` | Shared helpers: GWAS, selection, diversity metrics, crossing |
+| `new_main_run_all_scenarios_unique.R` | Main run script (30 replicates) |
+| `functions_utils.R` | Shared helper functions |
 | `male_sterility_scheme_gwas.R` | Genetic Male Sterility scheme |
 | `chem_sterilization_scheme_gwas.R` | Chemical Sterilization scheme |
 | `conventional_inbred_scheme_gwas.R` | Conventional Inbred Development scheme |
-| `plot_individual_plots_true_mean.R` | Plotting function (called by both scripts above) |
-| `quick_test.R` | Smoke test — 2 reps, reduced parameters |
+| `plot_individual_plots_true_mean.R` | Plotting |
+| `quick_test.R` | Smoke test (2 replicates, reduced parameters) |
 
-## Usage
+R packages required: `AlphaSimR`, `ggplot2`, `statgenGWAS`, `future`, `future.apply`, `progressr`, `patchwork`, `dplyr`
 
-**Quick smoke test** (2 reps, ~5–10 min):
+## gwas_simulation
 
-```r
-source("quick_test.R")
-```
+Power and false positive rate simulation comparing three GWAS models across two
+plant populations (SAP: Sorghum Association Panel, HBP: Haitian Breeding Population)
+using [simplePHENOTYPES](https://github.com/samuelbfernandes/simplePHENOTYPES) and
+[GAPIT](https://github.com/jiabowang/GAPIT).
 
-**Full run** (30 reps, all founder sizes — hours):
+| File | Purpose |
+|------|---------|
+| `pipeline_parallel.R` | Power simulation (100 replicates, parallelized) |
+| `pipeline_fpr.R` | False positive rate simulation (100 null replicates) |
+| `plot_summary_barplot.R` | Summary plots for power results |
+| `plot_summary_barplot_fpr.R` | Summary plots for FPR results |
 
-```r
-source("new_main_run_all_scenarios_unique.R")
-```
-
-Scheme toggles in `params`:
-
-```r
-run_ms3  = TRUE   # Genetic Male Sterility
-run_chem = TRUE   # Chemical Sterilization
-run_conv = TRUE   # Conventional Inbred Development
-```
-
-## Key parameters
-
-| Parameter | Value | Description |
-|-----------|-------|-------------|
-| `Ne` | 25 | Ancestral effective population size (coalescent) |
-| `n.chr` | 10 | Chromosomes |
-| `n.sites` | 300 | Segregating sites per chromosome |
-| `base_pop_size` | 300 | Founder pool (Ne × 12) |
-| `n.reps` | 30 | Independent replicates |
-| `n.cycles_ms` | 50 | Recurrent cycles (GMS/CS) |
-| `n.cycles_exe_rm` | 10 | Recurrent cycles (Conventional) |
-
-Founder population generated with MaCS: θ = 2.5 × 10⁻⁶/bp, ρ = 1 × 10⁻⁶/bp,
-chromosome length 10⁸ bp, `inbred = FALSE` (diverse diploid founders).
+R packages required: `GAPIT`, `simplePHENOTYPES`, `dplyr`, `readr`, `stringr`, `future`, `furrr`, `progressr`
