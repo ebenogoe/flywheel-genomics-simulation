@@ -18,7 +18,7 @@ plot_all_schemes_fair_with_lm <- function(csv_file) {
   # Rapid cycling = 1 generation/cycle; conventional = n.gens (5) generations/cycle
   data <- data %>%
     mutate(
-      total_generations = ifelse(scheme == "Genetic Male Sterility",
+      total_generations = ifelse(scheme %in% c("Genetic Male Sterility", "Chemical Sterilization"),
                                  recurrent_cycle,
                                  recurrent_cycle * n.gens)
     )
