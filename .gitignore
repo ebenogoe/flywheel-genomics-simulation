@@ -1,0 +1,15 @@
+# R session artefacts
+.RData
+.Rhistory
+.Rproj.user/
+
+# Simulation outputs (logs, results, figures)
+*.txt
+*.csv
+*.pdf
+*.jpg
+*.jpeg
+*.png
+
+# macOS
+.DS_Store
