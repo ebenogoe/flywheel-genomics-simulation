@@ -33,12 +33,6 @@ install.packages(c("AlphaSimR", "ggplot2", "statgenGWAS",
 
 ### Usage
 
-**Quick smoke test (2 replicates, around 5 to 10 minutes):**
-
-```r
-source("quick_test.R")
-```
-
 **Full run (30 replicates, all founder sizes, several hours):**
 
 ```r
